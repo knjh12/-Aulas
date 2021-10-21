@@ -11,6 +11,7 @@ var log1, log2, log3, log4;
 var bird;
 var backgroundimg, platform;
 var restritoLog;
+var chain;
 
 function preload(){
     backgroundimg = loadImage("sprites/bg.png");
@@ -41,16 +42,9 @@ function setup(){
     log3 = new Log(760,120,150,PI/7);
     log4 = new Log(870,120,150,-PI/7);
 
+    chain= new Chain(bird.body,restritoLog.body);
+    
 
-    var options = {
-        bodyA: bird.body,
-        bodyB: restritoLog.body,
-        stiffness: 0.04,
-        length: 10
-    }
-
-    var chain = Constraint.create(options);
-    World.add(world, chain);
 }
 
 function draw(){
@@ -78,6 +72,7 @@ function draw(){
 
     restritoLog.display();
 
-    strokeWeight(3);
-    line(bird.body.position.x, bird.body.position.y, restritoLog.body.position.x, restritoLog.body.position.y);
+    chain.display();
+
+    
 }
