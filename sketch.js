@@ -11,7 +11,7 @@ var log1, log2, log3, log4;
 var bird;
 var backgroundimg, platform;
 var restritoLog;
-var chain;
+var slingshot;
 
 function preload(){
     backgroundimg = loadImage("sprites/bg.png");
@@ -24,7 +24,7 @@ function setup(){
 
     platform = new Ground(150,305,300,170);
     ground = new Ground(600,height,1200,20);
-    restritoLog = new Log(230,180,80,PI/2);
+    //restritoLog = new Log(230,180,80,PI/2);
 
     box1 = new Box(700,320,70,70);
     box2 = new Box(920,320,70,70);
@@ -42,7 +42,7 @@ function setup(){
     log3 = new Log(760,120,150,PI/7);
     log4 = new Log(870,120,150,-PI/7);
 
-    chain= new Chain(bird.body,restritoLog.body);
+    slingshot= new SlingShot(bird.body, {x:200,y:100});
     
 
 }
@@ -51,6 +51,8 @@ function draw(){
     background(backgroundimg);
     Engine.update(engine);
     
+    
+
     platform.display();
     ground.display(); 
 
@@ -70,9 +72,13 @@ function draw(){
     log3.display();
     log4.display();
 
-    restritoLog.display();
+    slingshot.display(); 
+}
+function mouseDragged(){
+     Matter.Body.setPosition(bird.body,{x:mouseX,y:mouseY});
 
-    chain.display();
+}
+function mouseReleased(){
+ slingshot.fly();
 
-    
 }
