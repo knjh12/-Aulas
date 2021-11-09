@@ -16,6 +16,9 @@ function preload() {
 
 function setup(){
     var canvas = createCanvas(1200,400);
+
+    getTime();
+
     engine = Engine.create();
     world = engine.world;
 
@@ -46,6 +49,9 @@ function setup(){
 
 function draw(){
     background(backgroundImg);
+
+   // getTime();
+
     Engine.update(engine);
     strokeWeight(4);
     box1.display();
@@ -86,4 +92,13 @@ function keyPressed(){
   if(keyCode===32){
    slingshot.attach(bird.body);
   }
+}
+
+async function getBackgroundImg(){
+    var resposta = await fetch("https://worldtimeapi.org/api/timezone/Asia/Tokyo");
+    var respostaJSON = await resposta.json();
+
+    var datahora = respostaJSON.datetime;
+    var hora = datahora.slice(11,13);
+    console.log(hora);
 }
