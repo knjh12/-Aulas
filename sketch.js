@@ -8,6 +8,8 @@ var box1, pig1;
 var backgroundImg,platform;
 var bird, slingShot;
 
+var estadodejogo="stop";
+
 function preload() {
     backgroundImg = loadImage("sprites/bg.png");
 }
@@ -62,18 +64,22 @@ function draw(){
     log5.display();
 
     bird.display();
+   
     platform.display();
     //log6.display();
     slingshot.display();    
 }
 
 function mouseDragged(){
+    if(estadodejogo==="stop"){
     Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
+    }
 }
 
 
 function mouseReleased(){
     slingshot.fly();
+    estadodejogo="start";
 }
 
 function keyPressed(){
