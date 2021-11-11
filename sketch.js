@@ -9,15 +9,19 @@ var backgroundImg,platform;
 var bird, slingShot;
 
 var estadodejogo="stop";
+var score=0;
+var bg="sprites/bg.png";
 
 function preload() {
-    backgroundImg = loadImage("sprites/bg.png");
+    
+
+    getBackgroundImg();
+
 }
 
 function setup(){
     var canvas = createCanvas(1200,400);
 
-    getTime();
 
     engine = Engine.create();
     world = engine.world;
@@ -48,9 +52,15 @@ function setup(){
 }
 
 function draw(){
-    background(backgroundImg);
+    if(backgroundImg)
+      background(backgroundImg);
+  
+    fill("white");
+    textSize(35);
+    noStroke();
+    text("pontuação="+score,width-300,50);
 
-   // getTime();
+   
 
     Engine.update(engine);
     strokeWeight(4);
@@ -58,11 +68,13 @@ function draw(){
     box2.display();
     ground.display();
     pig1.display();
+    pig1.score();
     log1.display();
 
     box3.display();
     box4.display();
     pig3.display();
+    pig3.score();
     log3.display();
 
     box5.display();
@@ -77,9 +89,9 @@ function draw(){
 }
 
 function mouseDragged(){
-    if(estadodejogo==="stop"){
+    //if(estadodejogo==="stop"){
     Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
-    }
+    //}
 }
 
 
@@ -90,15 +102,28 @@ function mouseReleased(){
 
 function keyPressed(){
   if(keyCode===32){
+   bird.trajetoria=[];
+   Matter.Body.setPosition(bird.body,{x:200,y:50});
    slingshot.attach(bird.body);
   }
 }
 
 async function getBackgroundImg(){
-    var resposta = await fetch("https://worldtimeapi.org/api/timezone/Asia/Tokyo");
+    /*var resposta = await fetch("https://worldtimeapi.org/api/timezone/Asia/Tokyo");
     var respostaJSON = await resposta.json();
 
-    var datahora = respostaJSON.datetime;
-    var hora = datahora.slice(11,13);
+    var datahora = respostaJSON.datetime;*/
+    //var hora = datahora.slice(11,13);
+    hora=20;
     console.log(hora);
+    if(hora>=06&&hora<=19){
+     bg="sprites/bg.png";
+     console.log("dia");
+    }
+    else{
+        bg="sprites/bg2.png";
+        console.log("noite");
+    }
+    backgroundImg=loadImage(bg);
+    console.log(backgroundImg);
 }

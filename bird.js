@@ -18,5 +18,6 @@ class Bird extends BaseClass {
      image(this.smokeimage,this.trajetoria[i][0],this.trajetoria[i][1]);
      
     }
+    
   }
 }
